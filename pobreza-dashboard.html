@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablero de Visualización de Pobreza en México (2008-2018)</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .chart-box {
+            flex-basis: 45%;
+            margin: 15px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .chart-box h2 {
+            text-align: center;
+        }
+    </style>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawCharts);
+
+        function drawCharts() {
+            // Gráfico de líneas para evolución de pobreza y pobreza extrema
+            var data1 = google.visualization.arrayToDataTable([
+                ['Año', 'Pobreza (%)', 'Pobreza Extrema (%)'],
+                [2008, 44.4, 11.0],
+                [2010, 46.1, 10.4],
+                [2012, 45.5, 9.8],
+                [2014, 46.2, 9.5],
+                [2016, 43.2, 7.6],
+                [2018, 41.9, 7.4]
+            ]);
+
+            var options1 = {
+                title: 'Evolución de Pobreza y Pobreza Extrema (2008-2018)',
+                curveType: 'function',
+                legend: { position: 'bottom' }
+            };
+
+            var chart1 = new google.visualization.LineChart(document.getElementById('line_chart'));
+            chart1.draw(data1, options1);
+
+            // Gráfico de áreas apiladas para carencias sociales
+            var data2 = google.visualization.arrayToDataTable([
+                ['Indicador de Carencia', '2008 (%)', '2018 (%)'],
+                ['Rezago educativo', 21.9, 16.9],
+                ['Servicios de salud', 38.4, 16.2],
+                ['Seguridad social', 65.0, 57.3],
+                ['Calidad de vivienda', 17.7, 11.1],
+                ['Servicios básicos', 22.9, 19.8],
+                ['Acceso a alimentos', 21.7, 20.4]
+            ]);
+
+            var options2 = {
+                title: 'Carencias Sociales en México (2008 vs 2018)',
+                isStacked: true,
+                legend: { position: 'bottom' }
+            };
+
+            var chart2 = new google.visualization.AreaChart(document.getElementById('area_chart'));
+            chart2.draw(data2, options2);
+
+            // Gráfico de barras para pobreza por las 10 entidades federativas con mayor pobreza
+            var data3 = google.visualization.arrayToDataTable([
+                ['Estado', '2008 (%)', '2018 (%)'],
+                ['Chiapas', 77.0, 76.4],
+                ['Oaxaca', 61.8, 66.4],
+                ['Veracruz', 51.2, 61.8],
+                ['Guerrero', 68.4, 66.5],
+                ['Puebla', 58.9, 58.9],
+                ['Tabasco', 53.6, 53.6],
+                ['Michoacán', 52.3, 52.3],
+                ['Campeche', 51.1, 46.2],
+                ['Zacatecas', 44.3, 44.3],
+                ['San Luis Potosí', 43.4, 43.4]
+            ]);
+
+            var options3 = {
+                title: 'Top 10 Pobreza por Entidad Federativa (2008 vs 2018)',
+                chartArea: { width: '70%' },
+                hAxis: { title: 'Pobreza (%)' },
+                vAxis: { title: 'Estado' }
+            };
+
+            var chart3 = new google.visualization.BarChart(document.getElementById('bar_chart_top_10'));
+            chart3.draw(data3, options3);
+
+            // Gráfico de dispersión para pobreza vs pobreza extrema por las 10 entidades con mayor pobreza extrema
+            var data4 = google.visualization.arrayToDataTable([
+                ['Estado', 'Pobreza 2018 (%)', 'Pobreza Extrema 2018 (%)'],
+                ['Chiapas', 76.4, 30.2],
+                ['Oaxaca', 66.4, 24.3],
+                ['Guerrero', 66.5, 23.4],
+                ['Veracruz', 61.8, 21.5],
+                ['Puebla', 58.9, 17.6],
+                ['Tabasco', 53.6, 15.1],
+                ['Michoacán', 52.3, 14.3],
+                ['Campeche', 46.2, 12.5],
+                ['Morelos', 48.0, 12.1],
+                ['Zacatecas', 44.3, 11.7]
+            ]);
+
+            var options4 = {
+                title: 'Top 10 Pobreza vs Pobreza Extrema por Entidad Federativa (2018)',
+                hAxis: { title: 'Pobreza (%)' },
+                vAxis: { title: 'Pobreza Extrema (%)' },
+                legend: 'none'
+            };
+
+            var chart4 = new google.visualization.ScatterChart(document.getElementById('scatter_chart_top_10'));
+            chart4.draw(data4, options4);
+
+            // Gráfico de pastel para distribución de pobreza en 2018
+            var data5 = google.visualization.arrayToDataTable([
+                ['Condición', 'Población (millones)'],
+                ['En Pobreza Extrema', 9.3],
+                ['No en Pobreza Extrema', 43.1]
+            ]);
+
+            var options5 = {
+                title: 'Distribución de Pobreza en 2018'
+            };
+
+            var chart5 = new google.visualization.PieChart(document.getElementById('pie_chart'));
+            chart5.draw(data5, options5);
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Tablero de Visualización de Pobreza en México (2008-2018)</h1>
+    <div class="chart-container">
+        <div class="chart-box">
+            <h2>Evolución de Pobreza y Pobreza Extrema</h2>
+            <div id="line_chart" style="width: 100%; height: 500px"></div>
+        </div>
+        <div class="chart-box">
+            <h2>Carencias Sociales (2008 vs 2018)</h2>
+            <div id="area_chart" style="width: 100%; height: 500px"></div>
+        </div>
+        <div class="chart-box">
+            <h2>Pobreza por Entidad Federativa</h2>
+            <div id="bar_chart_top_10" style="width: 100%; height: 500px"></div>
+        </div>
+        <div class="chart-box">
+            <h2>Distribución de Pobreza en 2018</h2>
+            <div id="pie_chart" style="width: 100%; height: 500px"></div>
+        </div>
+        <div class="chart-box">
+            <h2>Pobreza vs Pobreza Extrema</h2>
+            <div id="scatter_chart_top_10" style="width: 100%; height: 500px"></div>
+        </div>
+    </div>
+</body>
+
+</html>
